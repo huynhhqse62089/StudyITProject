@@ -8,6 +8,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +38,11 @@ public class DispatcherServlet extends HttpServlet {
         String url = Page.defaultPage;
         try {
             String button = request.getParameter("btnAction");
-            CrawlData craw = new CrawlData();
+            ServletContext context = this.getServletContext();
+            CrawlData craw = new CrawlData(context);
             String realPath = getServletContext().getRealPath("/");
             String filePathOne = realPath + Page.filePathOne;
-            craw.getListCourseFromIviettech(filePathOne);
+//            craw.getListCourseFromIviettech(filePathOne);
             if (button == null) {
                 url = Page.homePage;
             } else {

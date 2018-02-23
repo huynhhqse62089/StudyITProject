@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.course.com"
+           xmlns="http://www.course.com"
+           elementFormDefault="qualified">
+    <xs:element name="course" type="courseItem"/>
+    <xs:complexType name="courseItem">
+        <xs:sequence>
+            <xs:element name="id" type="xs:integer"/>
+            <xs:element name="courseName" type="xs:string"/>
+            <xs:element name="timeStudy" type="xs:string"/>           
+            <xs:element name="openingDate" type="xs:string"/>
+            <xs:element name="location" type="xs:string"/>
+            <xs:element name="link" type="xs:string"/>
+            <xs:element name="tuition" type="xs:string"/>
+            <xs:element name="instructorName" type="xs:string"/>
+            <xs:element name="lengthStudy" type="xs:string"/>
+            <xs:element name="thumbnail" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

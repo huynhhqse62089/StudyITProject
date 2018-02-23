@@ -7,15 +7,23 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import page.Page;
 
 /**
  *
@@ -23,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "Image", catalog = "StudyIT", schema = "dbo")
-@XmlRootElement
+@XmlRootElement(namespace = Page.imageNamespace)
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i")
     , @NamedQuery(name = "Image.findById", query = "SELECT i FROM Image i WHERE i.id = :id")
@@ -34,17 +43,23 @@ public class Image implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)
+    @XmlElement(namespace = Page.imageNamespace)
     private Integer id;
     @Column(name = "Type", length = 50)
+    @XmlElement(namespace = Page.imageNamespace)
     private String type;
     @Column(name = "Link", length = 300)
+    @XmlElement(namespace = Page.imageNamespace)
     private String link;
     @JoinColumn(name = "ArticleId", referencedColumnName = "Id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @XmlTransient
     private Article articleId;
     @JoinColumn(name = "CourseId", referencedColumnName = "Id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @XmlTransient
     private Course courseId;
 
     public Image() {

@@ -6,17 +6,26 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import page.Page;
 
 /**
  *
@@ -24,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Course", catalog = "StudyIT", schema = "dbo")
-@XmlRootElement
+@XmlRootElement(namespace = Page.courseNamespace)
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
     , @NamedQuery(name = "Course.findById", query = "SELECT c FROM Course c WHERE c.id = :id")
@@ -42,34 +52,47 @@ public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "Id", nullable = false)
+    @XmlElement(namespace = Page.courseNamespace)
     private Integer id;
     @Basic(optional = false)
     @Column(name = "CourseName", nullable = false, length = 500)
+    @XmlElement(namespace = Page.courseNamespace)
     private String courseName;
     @Column(name = "TimeStudy", length = 500)
+    @XmlElement(namespace = Page.courseNamespace)
     private String timeStudy;
     @Column(name = "OpeningDate", length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String openingDate;
     @Column(name = "Location", length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String location;
     @Column(name = "Link", length = 200)
+    @XmlElement(namespace = Page.courseNamespace)
     private String link;
     @Basic(optional = false)
     @Column(name = "Tuition", nullable = false, length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String tuition;
     @Column(name = "InstructorName", length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String instructorName;
     @Basic(optional = false)
     @Column(name = "LengthStudy", nullable = false, length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String lengthStudy;
     @Column(name = "Thumbnail", length = 250)
+    @XmlElement(namespace = Page.courseNamespace)
     private String thumbnail;
     @Column(name = "Description", length = 2147483647)
+    @XmlElement(namespace = Page.courseNamespace)
     private String description;
-    @OneToMany(mappedBy = "courseId")
-    private Collection<Image> imageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
+    @XmlTransient
+    private List<Image> listImage = new ArrayList<Image>();
 
     public Course() {
     }
@@ -174,12 +197,17 @@ public class Course implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Image> getImageCollection() {
-        return imageCollection;
+    public List<Image> getImageList() {
+        return listImage;
     }
 
-    public void setImageCollection(Collection<Image> imageCollection) {
-        this.imageCollection = imageCollection;
+    public void setImageList(List<Image> listImage) {
+        this.listImage = listImage;
+    }
+
+    public void addImage(Image img) {
+        img.setCourseId(this);
+        listImage.add(img);
     }
 
     @Override
@@ -206,5 +234,5 @@ public class Course implements Serializable {
     public String toString() {
         return "entity.Course[ id=" + id + " ]";
     }
-    
+
 }
