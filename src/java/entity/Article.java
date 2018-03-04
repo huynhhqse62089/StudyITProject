@@ -6,17 +6,26 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import page.Page;
 
 /**
  *
@@ -24,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Article", catalog = "StudyIT", schema = "dbo")
-@XmlRootElement
+@XmlRootElement(namespace = Page.articleNamespace)
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Article.findAll", query = "SELECT a FROM Article a")
     , @NamedQuery(name = "Article.findById", query = "SELECT a FROM Article a WHERE a.id = :id")
@@ -40,25 +50,35 @@ public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)
+    @XmlElement(namespace = Page.articleNamespace)
     private Integer id;
     @Basic(optional = false)
     @Column(name = "Title", nullable = false, length = 500)
+    @XmlElement(namespace = Page.articleNamespace)
     private String title;
     @Column(name = "Link", length = 200)
+    @XmlElement(namespace = Page.articleNamespace)
     private String link;
     @Column(name = "Description", length = 2147483647)
+    @XmlElement(namespace = Page.articleNamespace)
     private String description;
     @Column(name = "Thumbnail", length = 200)
+    @XmlElement(namespace = Page.articleNamespace)
     private String thumbnail;
     @Column(name = "Summary", length = 500)
+    @XmlElement(namespace = Page.articleNamespace)
     private String summary;
     @Column(name = "Author", length = 200)
+    @XmlElement(namespace = Page.articleNamespace)
     private String author;
     @Column(name = "PubDate", length = 100)
+    @XmlElement(namespace = Page.articleNamespace)
     private String pubDate;
-    @OneToMany(mappedBy = "articleId")
-    private Collection<Image> imageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articleId")
+    @XmlTransient
+    private List<Image> listImage = new ArrayList<Image>();
 
     public Article() {
     }
@@ -138,13 +158,18 @@ public class Article implements Serializable {
 
     @XmlTransient
     public Collection<Image> getImageCollection() {
-        return imageCollection;
+        return listImage;
     }
 
-    public void setImageCollection(Collection<Image> imageCollection) {
-        this.imageCollection = imageCollection;
+    public void setImageCollection(List<Image> listImage) {
+        this.listImage = listImage;
     }
 
+    public void addImage(Image img) {
+        img.setArticleId(this);
+        listImage.add(img);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

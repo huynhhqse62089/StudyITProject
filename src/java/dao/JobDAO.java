@@ -5,7 +5,8 @@
  */
 package dao;
 
-import entity.Course;
+import entity.Article;
+import entity.Job;
 import java.io.Serializable;
 import static java.rmi.server.LogStream.log;
 import javax.persistence.EntityManager;
@@ -15,13 +16,13 @@ import utilities.DBUtility;
  *
  * @author yncdb
  */
-public class CourseDAO implements Serializable {
-
-    public static int addCourse(Course course) {
+public class JobDAO implements Serializable{
+    
+    public static int addJob(Job job) {
         EntityManager em = DBUtility.getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(course);
+            em.persist(job);
             em.getTransaction().commit();
             em.flush();
         } catch (Exception e) {
@@ -29,6 +30,7 @@ public class CourseDAO implements Serializable {
         } finally {
             em.close();
         }
-        return course.getId();
+        return job.getId();
     }
+    
 }

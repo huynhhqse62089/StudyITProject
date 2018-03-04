@@ -4,4 +4,5 @@
     <system systemId="file:/D:/FPT/XML/XML%20Projects/StudyITWebSite/web/WEB-INF/CourseData.xsd" uri="src/conf/xml-resources/jaxb/Courses/CourseData.xsd"/>
     <system systemId="file:/D:/FPT/XML/XML%20Projects/StudyITWebSite/web/WEB-INF/ImageData.xsd" uri="src/conf/xml-resources/jaxb/Images/ImageData.xsd"/>
     <system systemId="file:/D:/FPT/XML/XML%20Projects/StudyITWebSite/web/WEB-INF/ArticleData.xsd" uri="src/conf/xml-resources/jaxb/Article/ArticleData.xsd"/>
+    <system systemId="file:/D:/FPT/XML/XML%20Projects/StudyITWebSite/web/WEB-INF/Job.xsd" uri="src/conf/xml-resources/jaxb/Jobs/Job.xsd"/>
 </catalog>

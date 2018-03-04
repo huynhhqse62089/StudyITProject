@@ -5,6 +5,7 @@
     <class>entity.Article</class>
     <class>entity.Course</class>
     <class>entity.Image</class>
+    <class>entity.Job</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=StudyIT"/>

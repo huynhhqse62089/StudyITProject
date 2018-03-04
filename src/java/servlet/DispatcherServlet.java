@@ -38,11 +38,7 @@ public class DispatcherServlet extends HttpServlet {
         String url = Page.defaultPage;
         try {
             String button = request.getParameter("btnAction");
-            ServletContext context = this.getServletContext();
-            CrawlData craw = new CrawlData(context);
-            String realPath = getServletContext().getRealPath("/");
-            String filePathOne = realPath + Page.filePathOne;
-//            craw.getListCourseFromIviettech(filePathOne);
+            
             if (button == null) {
                 url = Page.homePage;
             } else {
