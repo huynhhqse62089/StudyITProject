@@ -9,14 +9,13 @@
 <footer>
     <div class="menu row">
         <ul>
-            <li class="zone-1">|</li>
             <li class="mlink zone-2"><a href="DispatcherServlet">Trang chủ</a></li>
             <li class="zone-1">|</li>
             <li class="mlink zone-3"><a href="DispatcherServlet?action=RANKING">Các khóa học lập trình</a></li>
             <li class="zone-1">|</li>
             <li class="mlink zone-2"><a href="DispatcherServlet?action=RANKING">Tin tức</a></li>
             <li class="zone-1">|</li>
-            <li class="zone-1"></li>
+            <li class="mlink zone-2"><a href="DispatcherServlet?action=RANKING">Việc làm</a></li>           
         </ul>
     </div>
 

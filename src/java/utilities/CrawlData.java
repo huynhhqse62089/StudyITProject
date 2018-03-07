@@ -27,7 +27,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import static java.rmi.server.LogStream.log;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -795,7 +797,7 @@ public class CrawlData {
             }
             getListArticleFromCsc(filePath);
             String realPath = srvlContext.getRealPath("/");
-            String filePathThree = realPath + Page.filePathThree;            
+            String filePathThree = realPath + Page.filePathThree;
             if (startIndex == lastestNumberPage) {
                 System.out.println("Xong cai Csc");
                 lastestNumberPage = -1;
@@ -1019,7 +1021,7 @@ public class CrawlData {
                         inputLine = StringEscapeUtils.unescapeHtml4(inputLine).trim();
                         inputLine = inputLine.replace("&", "Và");
                     }
-                    
+
 //                    writer.write(inputLine + "\n");
                     content += inputLine;
                 } else {
@@ -1053,7 +1055,12 @@ public class CrawlData {
                             if (classStr.equalsIgnoreCase("glyphicon glyphicon-time")) {
                                 reader.nextTag();
                                 reader.next();
-                                article.setPubDate(reader.getText().trim());
+                                String dateStr = reader.getText().trim();
+                                String dateStrFil = dateStr.substring(dateStr.indexOf("y") + 1, dateStr.length()).trim();
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                                Date date = sdf.parse(dateStrFil);
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                                article.setPubDate("Ngày " + sdf2.format(date));
                                 article.setAuthor(Page.authorCsc);
                             }
                         }//end if != null
@@ -1271,7 +1278,12 @@ public class CrawlData {
                                 XMLEvent eventTemp = xmlEventReader.nextEvent();
                                 if (eventTemp.isCharacters()) {
                                     Characters datePub = eventTemp.asCharacters();
-                                    job.setPubDate(datePub.getData().trim());
+                                    String dateStr = datePub.getData().trim();
+                                    String dateStrFil = dateStr.substring(dateStr.indexOf(",") + 1, dateStr.length()).trim();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date date = sdf.parse(dateStrFil);
+                                    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");                                    
+                                    job.setPubDate("Ngày " + sdf2.format(date));
                                 }
                             }
                         }

@@ -8,19 +8,17 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import page.Page;
-import utilities.CrawlData;
 
 /**
  *
  * @author yncdb
  */
-public class DispatcherServlet extends HttpServlet {
+public class JobServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,19 +35,9 @@ public class DispatcherServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = Page.defaultPage;
         try {
-            String button = request.getParameter("btnAction");
-            
-            if (button == null) {
-                url = Page.homeServlet;
-            } else if(button.equals("GETCOURSES")){
-                url = Page.courseServlet;
-            }else if(button.equals("GETARTICLES")){
-                url = Page.articleServlet;
-            }else if(button.equals("GETJOBS")){
-                url = Page.jobServlet;
-            }
-        } catch (Exception ex) {
-            log("DispatcherServlet: " + ex.getMessage());
+
+        } catch (Exception e) {
+            log(JobServlet.class + ": " + e.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

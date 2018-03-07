@@ -93,7 +93,7 @@ public class Utilities implements Serializable {
         try {
             JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = jaxb.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+//            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
             StringWriter sw = new StringWriter();
             marshaller.marshal(object, sw);
             return sw.toString();

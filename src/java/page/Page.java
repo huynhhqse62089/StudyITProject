@@ -12,8 +12,11 @@ package page;
 public class Page {
     public static final String dispatcherServlet = "DispatcherServlet";
     public static final String homePage = "homePage.jsp";
-    public static final String defaultPage = "defaultPage.html";
+    public static final String defaultPage = "DefaultPage.jsp";
     public static final String homeServlet = "homePageServlet";
+    public static final String courseServlet = "CourseServlet";
+    public static final String articleServlet = "ArticleServlet";
+    public static final String jobServlet = "JobServlet";
     public static final String filePathOne = "WEB-INF/webContentIviettech.html";
     public static final String filePathTwo = "WEB-INF/webContentKyna.html";
     public static final String filePathThree = "WEB-INF/webCsc.html";

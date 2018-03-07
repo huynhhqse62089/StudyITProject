@@ -192,7 +192,7 @@ and open the template in the editor.
     width:100%;
     z-index:2;
     background-attachment: fixed;
-    background-color: #f8b24f;
+    background-color: #f8e14f;
 }
 
 body {
@@ -296,4 +296,93 @@ body {
 .btnMore:hover {
     color: #fff;
     background-color: #0082c8;
+}
+
+.khoang-cach-5{
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.main-left-div{    
+    width: 66.66666667%;
+    float: left;
+    display: block;
+}
+
+.main-right-div{
+    width: 33.33333333%;
+    float: left;
+    position: relative;
+}
+
+.main-right-up-div{
+    width: 100%;
+    float: left;
+    position: relative;
+    display: block;
+}
+
+.main-right-down-div{
+    width: 100%;
+    float: left;
+    position: relative;
+    display: block;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.a-for-art{
+    color: #151414;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.img-responsive{
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.tieu-de-bai-viet-lon {
+    font-size: 24px;
+    padding: 20px 0px 0px 0px;
+    color: #0082c8;
+    line-height: 24px;
+}
+
+.noi-dung-bai-viet {
+    font-size: 19px;
+    color: #151414;
+    line-height: 22px;
+    text-align: justify;
+}
+.detail{
+    display: block;
+}
+
+.noi-dung-detail{
+    display: block;
+}
+
+.tieu-de-bai-viet {
+    font-size: 18px;
+    padding: 5px 0px 0px 0px;
+    color: #0082c8;
+    line-height: 20px;
+}
+
+.tieu-de-nho-detail {
+    font-size: 12px;
+    color: #999;
+    display: none;
+}
+
+.tieu-de-nho {
+    font-size: 12px;
+    color: #999;
 }

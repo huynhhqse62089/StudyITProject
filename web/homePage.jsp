@@ -6,7 +6,16 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 
+<c:set var="newestArticleOne" value="${requestScope.NEWEST_ARTICLE_ONE}" />
+<c:set var="newestArticleTwo" value="${requestScope.NEWEST_ARTICLE_TWO}" />
+<c:set var="newestArticleThree" value="${requestScope.NEWEST_ARTICLE_THREE}" />
+<c:set var="articles" value="${requestScope.ARTICLES}" />
+<c:set var="coursesSlide" value="${requestScope.COURSES_SLIDE_SHOW}" />
+<c:import var="xsldocNewestLeft" url="content/xslt/newestArticleLeft.xsl" />
+<c:import var="xsldocNewestRight" url="content/xslt/newestArticleRight.xsl" />
+<c:import var="xsldocSlideShow" url="content/xslt/courseSlideShow.xsl"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +25,8 @@
         <link href="content/css/homePage.css" rel="stylesheet" type="text/css">
         <link href="content/css/slideShow.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body onload="getThumbnail();
+            swap()">
         <div class="background">
             <div class="container">
                 <c:import url="header.jsp" charEncoding="UTF-8" />
@@ -28,11 +38,7 @@
                         <input type="radio" id="carousel-4" name="carousel">
                         <input type="radio" id="carousel-5" name="carousel">
                         <ul class="carousel__items">
-                            <li class="carousel__item"><img src="content/img/slide1.jpg" alt="pic1"></li>
-                            <li class="carousel__item"><img src="content/img/slide2.jpg" alt="pic2"></li>
-                            <li class="carousel__item"><img src="content/img/slide3.jpg" alt="pic3"></li>
-                            <li class="carousel__item"><img src="content/img/slide4.jpg" alt="pic4"></li>
-                            <li class="carousel__item"><img src="content/img/slide5.jpg" alt="pic5"></li>
+                            <x:transform doc="${coursesSlide}" xslt="${xsldocSlideShow}" />
                         </ul>
                         <div class="carousel__prev">
                             <label for="carousel-1"></label>
@@ -93,13 +99,20 @@
                         <h1 class="tieu-de-muc">Tin tức sự kiện mới nhất</h1>
                     </div>
                     <div class="tin-tuc-moi-nhat">
-                        
+                        <div class="main-left-div khoang-cach-5">                           
+                            <x:transform doc="${newestArticleOne}" xslt="${xsldocNewestLeft}" />
+                        </div>
+                        <div class="main-right-div khoang-cach-5">
+                            <div class="main-right-up-div">
+                                <x:transform doc="${newestArticleTwo}" xslt="${xsldocNewestRight}" />
+                            </div>
+                            <div class="main-right-down-div">
+                                <x:transform doc="${newestArticleThree}" xslt="${xsldocNewestRight}" />
+                            </div>
+                        </div>
                     </div>
                     <div id="" class="startnews">
-                        <ul id="otherArticleList">
-                            <%--<x:transform xml="${otherArticles}" xslt="${xsldocOther}" />--%>
-                        </ul>
-                        <button class="btn btnMore" onclick="getMoreArticle(null)">Xem thêm</button>
+                        <button class="btn btnMore" onclick="">Xem thêm</button>
                     </div>
                 </div>
                 <c:import url="footer.jsp" charEncoding="UTF-8" />
@@ -107,4 +120,66 @@
         </div>
     </body>
     <script type="text/javascript" src="content/js/GeneralJs.js"></script>
+    <script>
+        var counter = 0;
+        var time;
+        var arrayPic = [];
+        function getThumbnail() {
+            var courseObj, parser, xmlDoc, pic, i, length;
+            courseObj = '${requestScope.COURSES_SLIDE_SHOW}';
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(courseObj, "text/xml");
+            length = xmlDoc.getElementsByTagName("thumbnail").length;
+            for (i = 0; i < length; i++) {
+                pic = xmlDoc.getElementsByTagName("thumbnail")[i].childNodes[0].nodeValue;
+                arrayPic.push(pic);
+            }
+        }
+
+        function swap() {
+            var tag = document.getElementById("pic");
+            var label1 = document.getElementById("carousel-1");
+            var label2 = document.getElementById("carousel-2");
+            var label3 = document.getElementById("carousel-3");
+            var label4 = document.getElementById("carousel-4");
+            var label5 = document.getElementById("carousel-5");
+            if (counter === arrayPic.length) {
+                counter = 0;
+            }
+            tag.src = arrayPic[counter];
+            if(counter == 0){
+                label1.checked = true;
+                label2.checked = false;
+                label3.checked = false;
+                label4.checked = false;
+                label5.checked = false;
+            }else if(counter == 1){
+                label1.checked = false;              
+                label2.checked = true;
+                label3.checked = false;
+                label4.checked = false;
+                label5.checked = false;
+            }else if(counter == 2){
+                label1.checked = false;
+                label2.checked = false;
+                label3.checked = true;
+                label4.checked = false;
+                label5.checked = false;
+            }else if(counter == 3){
+                label1.checked = false;
+                label2.checked = false;
+                label3.checked = false;
+                label4.checked = true;
+                label5.checked = false;
+            }else if(counter == 4){
+                label1.checked = false;
+                label2.checked = false;
+                label3.checked = false;
+                label4.checked = false;
+                label5.checked = true;
+            }               
+            counter++;
+            time = setTimeout("swap()", 2000);
+        }
+    </script>
 </html>

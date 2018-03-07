@@ -5,22 +5,23 @@
  */
 package servlet;
 
+import dao.CourseDAO;
+import entity.ListCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import page.Page;
-import utilities.CrawlData;
+import utilities.Utilities;
 
 /**
  *
  * @author yncdb
  */
-public class DispatcherServlet extends HttpServlet {
+public class CourseServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,19 +38,11 @@ public class DispatcherServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = Page.defaultPage;
         try {
-            String button = request.getParameter("btnAction");
-            
-            if (button == null) {
-                url = Page.homeServlet;
-            } else if(button.equals("GETCOURSES")){
-                url = Page.courseServlet;
-            }else if(button.equals("GETARTICLES")){
-                url = Page.articleServlet;
-            }else if(button.equals("GETJOBS")){
-                url = Page.jobServlet;
-            }
-        } catch (Exception ex) {
-            log("DispatcherServlet: " + ex.getMessage());
+            ListCourse listCourse = CourseDAO.get1kFilRecordCour();
+            String parseStringListCourse = Utilities.marshallerToString(listCourse);
+            request.setAttribute("COURSES", parseStringListCourse);
+        } catch (Exception e) {
+            log("DispatcherServlet: " + e.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

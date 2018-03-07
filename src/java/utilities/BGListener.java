@@ -30,16 +30,16 @@ public class BGListener implements ServletContextListener {
             @Override
             public void run() {
                 System.out.println("Deploy.......");
-                String realPath = sce.getServletContext().getRealPath("/");
-                String filePathOne = realPath + Page.filePathOne;     
-                String filePathTwo = realPath + Page.filePathTwo;
-                String filePathThree = realPath + Page.filePathThree;
-                String filePathFour = realPath + Page.filePathFour;
-                CrawlData cd = new CrawlData(context);
-                cd.crawlHTMLJob(filePathFour, "http://iviettech.vn/category/viec-lam", 1);
-                cd.crawlHTMLForIviettech(filePathOne, "http://iviettech.vn/category/chuong-trinh-dao-tao");
-                cd.crawlHTMLForKyna(filePathTwo, "https://kyna.vn/danh-sach-khoa-hoc/it-va-lap-trinh");
-                cd.crawlArticleForCsc(filePathThree, "http://csc.edu.vn/lap-trinh-va-csdl/tin-tuc/tin-hoat-dong-lap-trinh-48", 1);            
+//                String realPath = sce.getServletContext().getRealPath("/");
+//                String filePathOne = realPath + Page.filePathOne;     
+//                String filePathTwo = realPath + Page.filePathTwo;
+//                String filePathThree = realPath + Page.filePathThree;
+//                String filePathFour = realPath + Page.filePathFour;
+//                CrawlData cd = new CrawlData(context);
+//                cd.crawlHTMLJob(filePathFour, "http://iviettech.vn/category/viec-lam", 1);
+//                cd.crawlHTMLForIviettech(filePathOne, "http://iviettech.vn/category/chuong-trinh-dao-tao");
+//                cd.crawlHTMLForKyna(filePathTwo, "https://kyna.vn/danh-sach-khoa-hoc/it-va-lap-trinh");
+//                cd.crawlArticleForCsc(filePathThree, "http://csc.edu.vn/lap-trinh-va-csdl/tin-tuc/tin-hoat-dong-lap-trinh-48", 1);            
                 System.out.println("Done");
             }
         };
